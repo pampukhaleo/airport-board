@@ -6,7 +6,6 @@ const webpack = require('webpack');
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
   const config = {
-    mode: 'development',
     entry: './src/index.jsx',
     output: {
       filename: 'bundle.js',
@@ -14,7 +13,8 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /.jsx?$/,
+          test: /.(js|jsx?)$/,
+          exclude: /node_modules/,
           use: ['babel-loader'],
         },
         {
@@ -28,7 +28,7 @@ module.exports = (env, argv) => {
       ],
     },
     resolve: {
-      modules: ['.', 'node_modules'],
+      extensions: ['.js', '.jsx'],
     },
     plugins: [
       new webpack.ProgressPlugin(),
@@ -38,9 +38,16 @@ module.exports = (env, argv) => {
       }),
     ],
     devServer: {
+      historyApiFallback: true,
+      open: true,
       hot: true,
+      port: 8080,
     },
   };
+
+  if (isProduction) {
+    config.plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
 
   if (isProduction) {
     config.plugins.push(
