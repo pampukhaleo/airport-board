@@ -1,6 +1,8 @@
 Airport-board React-Redux Project
 
-[Airport-board Netlify](https://main--airport-board-pampukha.netlify.app//)
+[Airport-board Netlify](https://main--airport-board-pampukha.netlify.app/)
+
+[Airport-board GitHub Pages](https://pampukhaleo.github.io/airport-board/)
 
 The tech stack is:
 
