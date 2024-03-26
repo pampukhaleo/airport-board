@@ -2,6 +2,7 @@
   "name": "solution",
   "version": "1.0.0",
   "main": "index.jsx",
+  "homepage": "https://pampukhaleo.github.io/airport-board/",
   "scripts": {
     "start": "webpack serve --mode=development --devtool source-map",
     "build": "webpack --mode=production"

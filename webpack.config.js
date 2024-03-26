@@ -34,7 +34,7 @@ module.exports = (env, argv) => {
       new webpack.ProgressPlugin(),
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
-        template: './index.html',
+        template: './src/index.html',
       }),
     ],
     devServer: {
