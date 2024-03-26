@@ -1,6 +1,5 @@
-React Calendar Project
+Airport-board React-Redux Project
 
-[Airport-board Netlify](https://main--airport-board-pampukha.netlify.app//)
 [Airport-board Netlify](https://main--airport-board-pampukha.netlify.app//)
 
 The tech stack is:
