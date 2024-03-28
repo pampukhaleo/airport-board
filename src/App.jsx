@@ -1,7 +1,8 @@
 import React from 'react';
+import FlightsList from './flights/components/flightsList';
 
 function App() {
-  return <h1>Todo List</h1>;
+  return <FlightsList />;
 }
 
 export default App;
