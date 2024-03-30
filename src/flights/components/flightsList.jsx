@@ -8,7 +8,7 @@ const FlightsList = () => {
   return (
     <>
       {flightList.map(flight => (
-        <div>
+        <div key={flight.id}>
           {flight.name}
           {flight.id}
         </div>
