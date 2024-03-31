@@ -10,7 +10,7 @@ import SearchByTypeButton from './SearchByTypeButton';
 import SearchInput from './SearchInput';
 
 const SearchContainer = () => {
-  const [searchType, setSearchType] = useState(null);
+  const [searchType, setSearchType] = useState(SEARCH_TYPES.DEPARTURE);
   const [searchText, setSearchText] = useState('');
 
   const handleSearchType = type => {
@@ -22,9 +22,24 @@ const SearchContainer = () => {
     setSearchType(SEARCH_TYPES.SEARCHED);
   };
 
+  let flightsList;
+  switch (searchType) {
+    case SEARCH_TYPES.DEPARTURE:
+      flightsList = departureFlightsListSelector;
+      break;
+    case SEARCH_TYPES.ARRIVAL:
+      flightsList = arrivalFlightsListSelector;
+      break;
+    case SEARCH_TYPES.SEARCHED:
+      flightsList = searchFlightsListSelector(searchText);
+      break;
+    default:
+      flightsList = [];
+  }
+
   return (
     <div>
-      <h1>пошук рейсу</h1>
+      <h1>Search Flight</h1>
       <SearchInput handleSearch={handleSearch} />
       <div>
         <SearchByTypeButton onClick={() => handleSearchType(SEARCH_TYPES.DEPARTURE)}>
@@ -33,17 +48,10 @@ const SearchContainer = () => {
         <SearchByTypeButton onClick={() => handleSearchType(SEARCH_TYPES.ARRIVAL)}>
           Arrivals
         </SearchByTypeButton>
-        {searchType === SEARCH_TYPES.DEPARTURE && (
-          <FlightsList flightsList={departureFlightsListSelector} />
-        )}
-        {searchType === SEARCH_TYPES.ARRIVAL && (
-          <FlightsList flightsList={arrivalFlightsListSelector} />
-        )}
-        {searchType === SEARCH_TYPES.SEARCHED && (
-          <FlightsList flightsList={searchFlightsListSelector(searchText)} />
-        )}
       </div>
+      <FlightsList flightsList={flightsList} />
     </div>
   );
 };
+
 export default SearchContainer;
