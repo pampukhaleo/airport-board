@@ -7,15 +7,16 @@ const SearchInput = ({ handleSearch }) => {
     setInput(event.target.value);
   };
 
-  const handleSearchClick = () => {
+  const handleSubmit = event => {
+    event.preventDefault(); // Prevent the form from auto-refreshing the page
     handleSearch(input);
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <input type="text" value={input} onChange={handleChange} />
-      <button onClick={handleSearchClick}>Search</button>
-    </div>
+      <button type="submit">Search</button>
+    </form>
   );
 };
 

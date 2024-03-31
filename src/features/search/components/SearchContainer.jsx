@@ -3,27 +3,18 @@ import {
   arrivalFlightsListSelector,
   departureFlightsListSelector,
   searchFlightsListSelector,
+  SEARCH_TYPES,
 } from '../../flights/flights.selectors';
 import FlightsList from '../../flights/components/FlightsList';
-import SearchByTypeButton from '../../flights/components/SearchByTypeButton';
-import SearchInput from '../../flights/components/SearchInput';
-
-const SEARCH_TYPES = {
-  DEPARTURES: 'DEPARTURES',
-  ARRIVALS: 'ARRIVALS',
-  SEARCHED: 'SEARCHED',
-};
+import SearchByTypeButton from './SearchByTypeButton';
+import SearchInput from './SearchInput';
 
 const SearchContainer = () => {
   const [searchType, setSearchType] = useState(null);
   const [searchText, setSearchText] = useState('');
 
-  const handleDepartures = () => {
-    setSearchType(SEARCH_TYPES.DEPARTURES);
-  };
-
-  const handleArrivals = () => {
-    setSearchType(SEARCH_TYPES.ARRIVALS);
+  const handleSearchType = type => {
+    setSearchType(type);
   };
 
   const handleSearch = searchInput => {
@@ -36,12 +27,16 @@ const SearchContainer = () => {
       <h1>пошук рейсу</h1>
       <SearchInput handleSearch={handleSearch} />
       <div>
-        <SearchByTypeButton callBack={handleDepartures}>Departures</SearchByTypeButton>
-        <SearchByTypeButton callBack={handleArrivals}>Arrivals</SearchByTypeButton>
-        {searchType === SEARCH_TYPES.DEPARTURES && (
+        <SearchByTypeButton onClick={() => handleSearchType(SEARCH_TYPES.DEPARTURE)}>
+          Departures
+        </SearchByTypeButton>
+        <SearchByTypeButton onClick={() => handleSearchType(SEARCH_TYPES.ARRIVAL)}>
+          Arrivals
+        </SearchByTypeButton>
+        {searchType === SEARCH_TYPES.DEPARTURE && (
           <FlightsList flightsList={departureFlightsListSelector} />
         )}
-        {searchType === SEARCH_TYPES.ARRIVALS && (
+        {searchType === SEARCH_TYPES.ARRIVAL && (
           <FlightsList flightsList={arrivalFlightsListSelector} />
         )}
         {searchType === SEARCH_TYPES.SEARCHED && (
