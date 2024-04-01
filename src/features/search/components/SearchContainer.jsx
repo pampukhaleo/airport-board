@@ -7,6 +7,7 @@ import {
 } from '../../flights/flights.selectors';
 import FlightsList from '../../flights/components/FlightsList';
 import SearchInput from './SearchInput';
+import FlightDetail from '../../flights/components/FlightDetail';
 
 const SearchContainer = () => {
   const [searchParam, setSearchParam] = useSearchParams({ text: '' });
@@ -31,7 +32,7 @@ const SearchContainer = () => {
       </div>
       <Routes>
         <Route
-          path="departures"
+          path="/departures"
           element={<FlightsList flightsList={departureFlightsListSelector} />}
         />
         <Route
@@ -39,6 +40,7 @@ const SearchContainer = () => {
           element={<FlightsList flightsList={arrivalFlightsListSelector} />}
         />
         <Route path="/search" element={<FlightsList flightsList={searchFlightsList} />} />
+        <Route path="/flight-details/:flightNumber" element={<FlightDetail />} />
       </Routes>
     </div>
   );
