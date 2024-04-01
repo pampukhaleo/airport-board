@@ -9,20 +9,22 @@ import FlightsList from '../../flights/components/FlightsList';
 import SearchInput from './SearchInput';
 
 const SearchContainer = () => {
-  const [searchText, setSearchText] = useSearchParams({ text: '' });
-  const inputText = searchText.get('text');
+  const [searchParam, setSearchParam] = useSearchParams({ text: '' });
+  const currentSearchText = searchParam.get('text');
 
-  const handleSearch = searchInput => {
-    setSearchText({ text: searchInput });
-    console.log(inputText);
+  const handleSearchInput = searchTextInput => {
+    setSearchParam({ text: searchTextInput });
   };
 
-  const searchFlightsList = useMemo(() => searchFlightsListSelector(inputText), [inputText]);
+  const searchFlightsList = useMemo(
+    () => searchFlightsListSelector(currentSearchText),
+    [currentSearchText],
+  );
 
   return (
     <div>
       <h1>Search Flight</h1>
-      <SearchInput handleSearch={handleSearch} />
+      <SearchInput handleSearch={handleSearchInput} />
       <div>
         <NavLink to={'departures'}>Departures</NavLink>
         <NavLink to={'arrivals'}>Arrivals</NavLink>

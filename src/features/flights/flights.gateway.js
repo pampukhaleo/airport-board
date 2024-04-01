@@ -7,4 +7,4 @@ function handleResponse(res) {
   throw new Error(`Request failed with status: ${res.status}`);
 }
 
-export const fetchFlights = () => fetch(AIRPORT_API_URL).then(handleResponse);
+export const fetchFlightsGateway = () => fetch(AIRPORT_API_URL).then(handleResponse);

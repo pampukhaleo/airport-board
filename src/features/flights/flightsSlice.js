@@ -1,15 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchFlights } from './flights.gateway';
+import { fetchFlightsGateway } from './flights.gateway';
 
 const initialState = [];
 
-const FLIGHT_LOAD_TYPE = 'flights/load';
-
 // Async thunk
-export const loadFlights = createAsyncThunk(FLIGHT_LOAD_TYPE, async () => {
-  const response = await fetchFlights();
-  console.log(response);
-  return response;
+export const loadFlights = createAsyncThunk('flights/load', async () => {
+  try {
+    return await fetchFlightsGateway();
+  } catch (error) {
+    console.error(`Request failed with error: ${error.message}`);
+    throw new Error(error);
+  }
 });
 
 // Slice
