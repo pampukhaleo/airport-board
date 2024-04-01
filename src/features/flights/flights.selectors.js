@@ -3,7 +3,6 @@ import { createSelector } from 'reselect';
 export const SEARCH_TYPES = {
   DEPARTURE: 'DEPARTURE',
   ARRIVAL: 'ARRIVAL',
-  SEARCHED: 'SEARCHED',
 };
 
 export const flightSelector = state => state.flights;

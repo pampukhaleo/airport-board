@@ -8,6 +8,7 @@ const FLIGHT_LOAD_TYPE = 'flights/load';
 // Async thunk
 export const loadFlights = createAsyncThunk(FLIGHT_LOAD_TYPE, async () => {
   const response = await fetchFlights();
+  console.log(response);
   return response;
 });
 

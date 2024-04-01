@@ -1,55 +1,41 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { NavLink, Route, Routes } from 'react-router-dom';
 import {
   arrivalFlightsListSelector,
   departureFlightsListSelector,
   searchFlightsListSelector,
-  SEARCH_TYPES,
 } from '../../flights/flights.selectors';
 import FlightsList from '../../flights/components/FlightsList';
-import SearchByTypeButton from './SearchByTypeButton';
 import SearchInput from './SearchInput';
 
 const SearchContainer = () => {
-  const [searchType, setSearchType] = useState(SEARCH_TYPES.DEPARTURE);
   const [searchText, setSearchText] = useState('');
-
-  const handleSearchType = type => {
-    setSearchType(type);
-  };
 
   const handleSearch = searchInput => {
     setSearchText(searchInput);
-    setSearchType(SEARCH_TYPES.SEARCHED);
   };
 
-  let flightsList;
-  switch (searchType) {
-    case SEARCH_TYPES.DEPARTURE:
-      flightsList = departureFlightsListSelector;
-      break;
-    case SEARCH_TYPES.ARRIVAL:
-      flightsList = arrivalFlightsListSelector;
-      break;
-    case SEARCH_TYPES.SEARCHED:
-      flightsList = searchFlightsListSelector(searchText);
-      break;
-    default:
-      flightsList = [];
-  }
+  const flightsList = useMemo(() => searchFlightsListSelector(searchText), [searchText]);
 
   return (
     <div>
       <h1>Search Flight</h1>
       <SearchInput handleSearch={handleSearch} />
       <div>
-        <SearchByTypeButton onClick={() => handleSearchType(SEARCH_TYPES.DEPARTURE)}>
-          Departures
-        </SearchByTypeButton>
-        <SearchByTypeButton onClick={() => handleSearchType(SEARCH_TYPES.ARRIVAL)}>
-          Arrivals
-        </SearchByTypeButton>
+        <NavLink to={'departures'}>Departures</NavLink>
+        <NavLink to={'arrivals'}>Arrivals</NavLink>
       </div>
-      <FlightsList flightsList={flightsList} />
+      <Routes>
+        <Route
+          path="departures"
+          element={<FlightsList flightsList={departureFlightsListSelector} />}
+        />
+        <Route
+          path="/arrivals"
+          element={<FlightsList flightsList={arrivalFlightsListSelector} />}
+        />
+        <Route path="/search" element={<FlightsList flightsList={flightsList} />} />
+      </Routes>
     </div>
   );
 };
