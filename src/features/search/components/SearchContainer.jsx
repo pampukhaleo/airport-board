@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { NavLink, Route, Routes } from 'react-router-dom';
+import React, { useMemo } from 'react';
+import { NavLink, Route, Routes, useSearchParams } from 'react-router-dom';
 import {
   arrivalFlightsListSelector,
   departureFlightsListSelector,
@@ -9,13 +9,15 @@ import FlightsList from '../../flights/components/FlightsList';
 import SearchInput from './SearchInput';
 
 const SearchContainer = () => {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useSearchParams({ text: '' });
+  const inputText = searchText.get('text');
 
   const handleSearch = searchInput => {
-    setSearchText(searchInput);
+    setSearchText({ text: searchInput });
+    console.log(inputText);
   };
 
-  const flightsList = useMemo(() => searchFlightsListSelector(searchText), [searchText]);
+  const searchFlightsList = useMemo(() => searchFlightsListSelector(inputText), [inputText]);
 
   return (
     <div>
@@ -34,7 +36,7 @@ const SearchContainer = () => {
           path="/arrivals"
           element={<FlightsList flightsList={arrivalFlightsListSelector} />}
         />
-        <Route path="/search" element={<FlightsList flightsList={flightsList} />} />
+        <Route path="/search" element={<FlightsList flightsList={searchFlightsList} />} />
       </Routes>
     </div>
   );
