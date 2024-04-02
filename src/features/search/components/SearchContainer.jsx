@@ -1,13 +1,8 @@
 import React, { useMemo } from 'react';
-import { NavLink, Route, Routes, useSearchParams } from 'react-router-dom';
-import {
-  arrivalFlightsListSelector,
-  departureFlightsListSelector,
-  searchFlightsListSelector,
-} from '../../flights/flights.selectors';
-import FlightsList from '../../flights/components/FlightsList';
+import { NavLink, useSearchParams } from 'react-router-dom';
+import { searchFlightsListSelector } from '../../flights/flights.selectors';
 import SearchInput from './SearchInput';
-import FlightDetail from '../../flights/components/FlightDetail';
+import FlightRoutes from '../../routes/FlightRoutes';
 
 const SearchContainer = () => {
   const [searchParam, setSearchParam] = useSearchParams({ text: '' });
@@ -30,18 +25,7 @@ const SearchContainer = () => {
         <NavLink to={'departures'}>Departures</NavLink>
         <NavLink to={'arrivals'}>Arrivals</NavLink>
       </div>
-      <Routes>
-        <Route
-          path="/departures"
-          element={<FlightsList flightsList={departureFlightsListSelector} />}
-        />
-        <Route
-          path="/arrivals"
-          element={<FlightsList flightsList={arrivalFlightsListSelector} />}
-        />
-        <Route path="/search" element={<FlightsList flightsList={searchFlightsList} />} />
-        <Route path="/flight-details/:flightNumber" element={<FlightDetail />} />
-      </Routes>
+      <FlightRoutes searchList={searchFlightsList} />
     </div>
   );
 };
