@@ -5,7 +5,7 @@ import SearchInput from './SearchInput';
 import FlightRoutes from '../../routes/FlightRoutes';
 
 const SearchContainer = () => {
-  const [searchParam, setSearchParam] = useSearchParams({ text: '' });
+  const [searchParam, setSearchParam] = useSearchParams({ text: '', date: '' });
   const currentSearchText = searchParam.get('text');
 
   const handleSearchInput = searchTextInput => {
