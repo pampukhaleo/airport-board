@@ -14,7 +14,7 @@ const FlightItem = ({ flight }) => {
     <div key={flight.id} style={{ margin: '10px' }}>
       type: {flight.type}
       flight: {flight.codeShare}
-      arrival date: {flight.arrival}
+      arrival date: {flight.arrivalDate}
       departure date: {flight.departureDate}
       <button onClick={handleButtonClick}>Flight Info</button>
     </div>
