@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { loadFlights } from '../flightsSlice';
@@ -11,26 +11,14 @@ const FlightsList = ({ flightsList }) => {
   const location = useLocation();
   const isDeparturesRouteOpen = location.pathname === '/departures';
 
-  const [searchDate, setSearchDate] = useState(null);
-
-  const handleDateChange = date => {
-    setSearchDate(date);
-  };
-
   useEffect(() => {
     dispatch(loadFlights());
   }, [dispatch]);
 
-  const filteredFlights = searchDate
-    ? flights.filter(flight => flight.date === searchDate)
-    : flights;
-
-  console.log(filteredFlights);
-
   return (
     <div style={{ margin: '50px 10px' }}>
-      {isDeparturesRouteOpen && <SearchByDate onDateChange={handleDateChange} />}
-      {filteredFlights.map(flight => (
+      {isDeparturesRouteOpen && <SearchByDate />}
+      {flights.map(flight => (
         <FlightItem key={flight.id} flight={flight} />
       ))}
     </div>

@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import moment from 'moment';
 
 export const SEARCH_TYPES = {
   DEPARTURE: 'DEPARTURE',
@@ -15,7 +16,17 @@ export const arrivalFlightsListSelector = createSelector([flightSelector], fligh
   flights.filter(flight => flight.type === SEARCH_TYPES.ARRIVAL),
 );
 
-export const searchFlightsListSelector = searchText =>
+export const searchByInputTextSelector = searchText =>
   createSelector([flightSelector], flights =>
     flights.filter(flight => flight.codeShare && flight.codeShare.includes(searchText)),
   );
+
+export const searchByDateSelector = searchDate =>
+  createSelector([flightSelector], flights => {
+    const formatDate = moment(searchDate).valueOf();
+    return flights.filter(flight => flight.date === formatDate);
+  });
+
+// const filteredFlights = searchDate
+//   ? flights.filter(flight => flight.date === searchDate)
+//   : flights;

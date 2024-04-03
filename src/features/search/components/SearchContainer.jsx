@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { NavLink, useSearchParams } from 'react-router-dom';
-import { searchFlightsListSelector } from '../../flights/flights.selectors';
+import { searchByInputTextSelector } from '../../flights/flights.selectors';
 import SearchInput from './SearchInput';
 import FlightRoutes from '../../routes/FlightRoutes';
 
 const SearchContainer = () => {
-  const [searchParam, setSearchParam] = useSearchParams({ text: '', date: '' });
+  const [searchParam, setSearchParam] = useSearchParams({ text: '' });
   const currentSearchText = searchParam.get('text');
 
   const handleSearchInput = searchTextInput => {
@@ -13,7 +13,7 @@ const SearchContainer = () => {
   };
 
   const searchFlightsList = useMemo(
-    () => searchFlightsListSelector(currentSearchText),
+    () => searchByInputTextSelector(currentSearchText),
     [currentSearchText],
   );
 
