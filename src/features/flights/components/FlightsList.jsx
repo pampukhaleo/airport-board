@@ -1,24 +1,21 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { loadFlights } from '../flightsSlice';
 import FlightItem from './FlightItem';
 import SearchByDate from '../../search/components/SearchByDate';
 
-const FlightsList = ({ flightsList }) => {
-  const flights = useSelector(flightsList);
-  const dispatch = useDispatch();
+const FlightsList = ({ flights }) => {
   const location = useLocation();
-  const isDeparturesRouteOpen = location.pathname === '/departures';
+  const { direction } = useParams();
+  console.log(direction);
 
-  useEffect(() => {
-    dispatch(loadFlights());
-  }, [dispatch]);
+  const flightsList = flights[direction === 'arrivals' ? 'arrivals' : 'departures'] || [];
 
   return (
     <div style={{ margin: '50px 10px' }}>
-      {isDeparturesRouteOpen && <SearchByDate />}
-      {flights.map(flight => (
+      {/* {isDeparturesRouteOpen && <SearchByDate />} */}
+      {flightsList.map(flight => (
         <FlightItem key={flight.id} flight={flight} />
       ))}
     </div>

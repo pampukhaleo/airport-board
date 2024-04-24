@@ -1,33 +1,41 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { NavLink, useSearchParams } from 'react-router-dom';
-import { searchByInputTextSelector } from '../../flights/flights.selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { flightSelector, searchByInputTextSelector } from '../../flights/flights.selectors';
 import SearchInput from './SearchInput';
-import FlightRoutes from '../../routes/FlightRoutes';
+import FlightsList from '../../flights/components/FlightsList';
+import { loadFlights } from '../../flights/flightsSlice';
 
 const SearchContainer = () => {
-  const [searchParam, setSearchParam] = useSearchParams({ text: '' });
-  const currentSearchText = searchParam.get('text');
+  const flights = useSelector(flightSelector);
+  const dispatch = useDispatch();
 
-  const handleSearchInput = searchTextInput => {
-    setSearchParam({ text: searchTextInput });
-  };
-
-  const searchFlightsList = useMemo(
-    () => searchByInputTextSelector(currentSearchText),
-    [currentSearchText],
-  );
+  useEffect(() => {
+    dispatch(loadFlights());
+  }, [dispatch]);
 
   return (
     <div>
       <h1>Search Flight</h1>
-      <SearchInput handleSearch={handleSearchInput} />
+      {/* <SearchInput handleSearch={handleSearchInput} /> */}
       <div>
         <NavLink to={'departures'}>Departures</NavLink>
         <NavLink to={'arrivals'}>Arrivals</NavLink>
       </div>
-      <FlightRoutes searchList={searchFlightsList} />
+      <FlightsList flights={flights} />
     </div>
   );
 };
+// const [searchParam, setSearchParam] = useSearchParams({ text: '' });
+// const currentSearchText = searchParam.get('text');
+//
+// const handleSearchInput = searchTextInput => {
+//   setSearchParam({ text: searchTextInput });
+// };
+
+// const searchFlightsList = useMemo(
+//   () => searchByInputTextSelector(currentSearchText),
+//   [currentSearchText],
+// );
 
 export default SearchContainer;
